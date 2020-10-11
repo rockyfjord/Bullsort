@@ -2,5 +2,7 @@
     <string name="app_name">Bullsort</string>
     <string name="capture">Capture</string>
     <string name="about">About</string>
+    <string name="lblStoreId">Store #:</string>
+    <string name="txtStoreId">0108</string>
 
 </resources>
