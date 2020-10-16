@@ -14,6 +14,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
@@ -28,14 +29,21 @@ import java.util.regex.Pattern
 
 class ActivityCapture : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
-    private val p: Pattern = Pattern.compile("0108\\p{Digit}{9} | \\p{Digit}{2}[A-F]\\p{Space}*\\p{Digit}{3}\\D\\d{2}")
+
+
+    //Move to a companion object, but retrieve storeId from the bundle
+    //val bundle: Bundle? = intent.extras
+    //val storeID = bundle?.getString("storeId")
+    private val storeId  = "0108"
+    private val p: Pattern = Pattern.compile("$storeId\\p{Digit}{9} | \\p{Digit}{2}[A-F]\\p{Space}*\\p{Digit}{3}\\D\\d{2}")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capture)
-        val bundle: Bundle? = intent.extras
-        val storeID = bundle?.getString("storeId")
-        val myToast = Toast.makeText(this@ActivityCapture, "STORE#: ${storeID}", Toast.LENGTH_LONG)
+
+
+        val myToast = Toast.makeText(this@ActivityCapture, "STORE#: $storeId", Toast.LENGTH_LONG)
         myToast.show()
 
         // Request camera permissions
