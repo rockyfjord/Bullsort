@@ -14,38 +14,23 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import kotlinx.android.synthetic.main.activity_capture.*
-import java.io.File
 import java.util.*
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
 class ActivityCapture : AppCompatActivity() {
-    private lateinit var cameraExecutor: ExecutorService
-
-
-    //Move to a companion object, but retrieve storeId from the bundle
-    //val bundle: Bundle? = intent.extras
-    //val storeID = bundle?.getString("storeId")
-    private val storeId  = "0108"
-    private val p: Pattern = Pattern.compile("$storeId\\p{Digit}{9} | \\p{Digit}{2}[A-F]\\p{Space}*\\p{Digit}{3}\\D\\d{2}")
-
+    val p: Pattern = Pattern.compile("\\b0108\\d{9}\\b")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capture)
-
-
-        val myToast = Toast.makeText(this@ActivityCapture, "STORE#: $storeId", Toast.LENGTH_LONG)
-        myToast.show()
-
+        Log.d("TEST", "TEST")
         // Request camera permissions
         if (allPermissionsGranted()) {
             startCamera()
@@ -63,17 +48,6 @@ class ActivityCapture : AppCompatActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun getOutputDirectory(): File {
-        val mediaDir = externalMediaDirs.firstOrNull()?.let {
-            File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else filesDir
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
-    }
 
     companion object {
         private const val TAG = "CameraXBasic"
@@ -115,7 +89,7 @@ class ActivityCapture : AppCompatActivity() {
                 }
 
             val imageAnalysis = ImageAnalysis.Builder()
-                .setTargetResolution(Size(480, 640))
+                .setTargetResolution(Size(720, 960))
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
             imageAnalysis.setAnalyzer(
@@ -169,29 +143,33 @@ class ActivityCapture : AppCompatActivity() {
     }
 
     private fun processTextRecognitionResult(texts: Text){
+
         val barcodes: LinkedHashSet<String> = LinkedHashSet<String>()
         val blocks = texts.text
-
+        //Log.d("BLOCK: ", blocks)
         val m: Matcher = p.matcher(blocks)
         while (m.find())
         {
             barcodes.add(m.group())
-
+            Log.d("BARCODE", m.group())
         }
 
         /*  This code is for Demo at the moment. We are not able to update
             the barcodes textView in the UI from outside the main thread.*/
         if(barcodes.size > 0) {
-            var t = barcodes.joinToString(prefix = "", postfix = "\n", separator = "\n")
-            Log.d("BARCODEs DETECTED:", barcodes.size.toString())
+            var t = barcodes.joinToString(prefix = "", postfix = "", separator = "\n")
             val myToast = Toast.makeText(this@ActivityCapture, t, Toast.LENGTH_SHORT)
             myToast.show()
+            this.runOnUiThread {
+                txtBarcodes.text = txtBarcodes.text.toString() + t
+            }
         }
         else{
-            val myToast = Toast.makeText(this@ActivityCapture, "None detected.", Toast.LENGTH_SHORT)
+            val myToast = Toast.makeText(this@ActivityCapture, "None Detected.", Toast.LENGTH_SHORT)
             myToast.show()
         }
 
+        
 
 
         /*
