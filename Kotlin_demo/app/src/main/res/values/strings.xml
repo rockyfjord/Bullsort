@@ -5,6 +5,10 @@
     <string name="lblStoreId">Store #:</string>
     <string name="txtStoreId">0108</string>
     <string name="finished">Finished</string>
-    <string name="barcodes">Barcodes</string>
+    <string name="barcodes">Barcodes:</string>
     <string name="generate">Generate</string>
+    <string name="txtBarcodes" />
+    <string name="txtCount">0</string>
+    <string name="title_activity_barcodes">ActivityBarcodes</string>
+    <string name="done">Done!</string>
 </resources>

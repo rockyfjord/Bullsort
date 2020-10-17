@@ -4,40 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".ActivityCapture">
+
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:ignore="MissingConstraints" />
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="181dp"
         android:layout_height="432dp"
+        android:nextFocusLeft="@id/viewFinder"
+        android:nextFocusUp="@id/viewFinder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblBarcodes"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:labelFor="@id/txtBarcodes"
         android:text="@string/barcodes"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="viewStart"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/txtBarcodes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:lines="4"
+        android:layout_marginStart="8dp"
+        android:enabled="false"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
         android:singleLine="false"
+        android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/btnGen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewFinder"
-        app:layout_constraintTop_toBottomOf="@+id/lblBarcodes" />
+        app:layout_constraintTop_toBottomOf="@+id/lblBarcodes"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/btnGen"
         android:layout_width="0dp"
         android:layout_height="70dp"
+        android:onClick="gotoActivity"
         android:text="@string/generate"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,4 +77,18 @@
         app:layout_constraintTop_toBottomOf="@+id/viewFinder"
         app:layout_constraintVertical_bias="0.13999999"
         app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/txtCount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/txtCount"
+        android:textAlignment="viewStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtBarcodes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/lblBarcodes"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

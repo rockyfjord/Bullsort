@@ -10,7 +10,7 @@
         android:id="@+id/imageView2"
         android:layout_width="231dp"
         android:layout_height="251dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCapture"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinished"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnCapture"
+        android:id="@+id/btnFinished"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="24dp"
@@ -53,7 +53,7 @@
         android:text="@string/lblStoreId"
         android:textAlignment="textEnd"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCapture"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinished"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -68,7 +68,7 @@
         android:cursorVisible="false"
         android:textAlignment="viewStart"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCapture"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinished"
         app:layout_constraintStart_toEndOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
