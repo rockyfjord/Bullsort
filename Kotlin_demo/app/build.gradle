@@ -37,6 +37,7 @@ android {
 dependencies {
     def lifecycle_version = "2.2.0"
     def camerax_version = "1.0.0-beta11"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     implementation 'org.jetbrains.anko:anko-common:0.9'
     implementation fileTree(dir: "libs", include: ["*.jar"])

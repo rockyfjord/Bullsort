@@ -44,10 +44,11 @@
         android:layout_marginStart="8dp"
         android:enabled="false"
         android:gravity="top|start"
-        android:inputType="textMultiLine"
+        android:inputType="none"
         android:scrollbars="vertical"
         android:singleLine="false"
         android:textAlignment="viewStart"
+        android:textIsSelectable="true"
         app:layout_constraintBottom_toTopOf="@+id/btnGen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewFinder"
@@ -65,17 +66,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnGen2"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="clear"
+        android:text="@string/clear"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnGen"
+        app:layout_constraintEnd_toStartOf="@+id/txtBarcodes"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGen"
+        app:layout_constraintBottom_toTopOf="@+id/btnGen2"
         app:layout_constraintEnd_toStartOf="@+id/txtBarcodes"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewFinder"
-        app:layout_constraintVertical_bias="0.13999999"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/logo" />
 
     <TextView

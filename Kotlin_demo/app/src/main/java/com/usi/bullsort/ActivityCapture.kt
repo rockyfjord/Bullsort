@@ -3,7 +3,6 @@ package com.usi.bullsort
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -25,9 +24,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.activity_capture.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Runnable
-import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 import java.util.concurrent.ConcurrentHashMap
@@ -38,9 +35,12 @@ import kotlin.concurrent.thread
 
 
 class ActivityCapture : AppCompatActivity() {
-    val p: Pattern = Pattern.compile("\\b" + Pattern.compile("0108") + "\\d{9}\\b")
-    var certificationCosts = ConcurrentHashMap<Any, Any>()
-    var concurrentHashSet: ConcurrentHashMap.KeySetView<Any, Any> = certificationCosts.keySet(true)
+    val barcodePattern: Pattern = Pattern.compile("""\b0108\d{9}\b""")
+    val dpciPattern: Pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{4}")
+    val brPattern: Pattern = Pattern.compile("\\d{2}[A-FM]\\s*\\d{3}\\D\\d{2}")
+    val patterns = arrayOf<Pattern>(barcodePattern, dpciPattern, brPattern)
+    var certificationCosts = ConcurrentHashMap<String, Any>()
+    var concurrentHashSet: ConcurrentHashMap.KeySetView<String, Any> = certificationCosts.keySet(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,9 +169,11 @@ class ActivityCapture : AppCompatActivity() {
     private fun processTextRecognitionResult(texts: Text): LinkedHashSet<String> {
         val barcodes: LinkedHashSet<String> = LinkedHashSet<String>()
         val blocks = texts.text
-        val m: Matcher = p.matcher(blocks)
-        while (m.find()) {
-            barcodes.add(m.group())
+        patterns.forEach{
+            val m: Matcher = it.matcher(blocks)
+            while (m.find()) {
+                barcodes.add(m.group().replace("-", ""))
+            }
         }
         return barcodes
     }
@@ -181,39 +183,43 @@ class ActivityCapture : AppCompatActivity() {
         val mediaStorageDir = applicationInfo.dataDir
         // Create the storage directory if it does not exist
         val f = File(mediaStorageDir + File.separator+ folderMain)
-        //Log.d("PATH", f.path)
-        File(f.path).walk().forEach {
-            Log.d("PATH", it.path)}
-            toast(f.exists().toString())
         if (! f.exists()){
             f.mkdirs()
             }
         return f.path + File.separator + fileName + ".PNG"
     }
 
-    fun gotoActivity(view: View) {
-        val intent = Intent(this, ActivityBarcodes::class.java)
-
-
-        val code = "0108696969696"
-        val codePath = getOutputMediaFile(code)
-        if (codePath != null) {
-            Log.d("PATH", codePath)
-            Log.d("PATH", File(codePath).exists().toString())
-        }
+    private fun generateBarcode(barcode: String){
+        val codePath = getOutputMediaFile(barcode)
         try {
             val barcodeEncoder = BarcodeEncoder()
             val bitmap: Bitmap =
-                barcodeEncoder.encodeBitmap(code, BarcodeFormat.CODE_128, 800, 175)
+                barcodeEncoder.encodeBitmap(barcode, BarcodeFormat.CODE_128, 800, 175)
             val fos: FileOutputStream = FileOutputStream(codePath)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close()
 
         } catch (e: java.lang.Exception) {
+
         }
+    }
+
+    fun gotoActivity(view: View) {
+        if (concurrentHashSet.size > 0){
+            for (entry in concurrentHashSet) {
+                generateBarcode(entry)
+            }
+        }
+        val intent = Intent(this, ActivityBarcodes::class.java)
         startActivity(intent)
+    }
 
-
+    fun clear(view: View) {
+        val intent = Intent(this, ActivityCapture::class.java)
+        concurrentHashSet.clear()
+        txtCount.text = "0"
+        txtBarcodes.setText("")
+        startActivity(intent)
     }
 
 }
