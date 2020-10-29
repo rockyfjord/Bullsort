@@ -10,6 +10,8 @@
     <string name="clear">Clear</string>
     <string name="txtBarcodes" />
     <string name="txtCount">0</string>
-    <string name="title_activity_barcodes">ActivityBarcodes</string>
+    <string name="title_activity_barcodes">You\'re welcome! \😉</string>
     <string name="done">Done!</string>
+    <string name="intro">Welcome! This app uses ML Kit to \👀recognize container numbers, backroom locations, and DPCIs. Work smart! \🤓🧠</string>
+    <string name="poop">It\'s poop!</string>
 </resources>

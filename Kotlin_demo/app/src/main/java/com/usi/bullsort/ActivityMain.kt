@@ -5,7 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.regex.Pattern
 
 
 class ActivityMain : AppCompatActivity() {
@@ -15,8 +17,17 @@ class ActivityMain : AppCompatActivity() {
     }
 
     fun gotoActivity(view: View) {
-        val intent = Intent(this, ActivityCapture::class.java)
-        intent.putExtra("storeId", txtStoreId.text.toString())
-        startActivity(intent)
+        val storeId = txtStoreId.text.toString()
+        if(!Pattern.matches("\\d{4}", storeId)){
+            txtStoreId.setText(R.string.txtStoreId);
+            Toast.makeText(applicationContext, "Store# must be 4 digits!", Toast.LENGTH_LONG).show()
+        }
+        else {
+            val intent = Intent(this, ActivityCapture::class.java).apply {
+                putExtra("storeId", storeId)
+
+            }
+            startActivity(intent)
+        }
     }
 }

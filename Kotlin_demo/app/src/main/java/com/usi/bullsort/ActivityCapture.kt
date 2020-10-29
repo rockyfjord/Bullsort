@@ -35,16 +35,20 @@ import kotlin.concurrent.thread
 
 
 class ActivityCapture : AppCompatActivity() {
-    val barcodePattern: Pattern = Pattern.compile("""\b0108\d{9}\b""")
-    val dpciPattern: Pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{4}")
-    val brPattern: Pattern = Pattern.compile("\\d{2}[A-FM]\\s*\\d{3}\\D\\d{2}")
-    val patterns = arrayOf<Pattern>(barcodePattern, dpciPattern, brPattern)
+    private lateinit var storeId: String
+    private lateinit var patterns: Array<Pattern>
     var certificationCosts = ConcurrentHashMap<String, Any>()
     var concurrentHashSet: ConcurrentHashMap.KeySetView<String, Any> = certificationCosts.keySet(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capture)
+        storeId = intent.getStringExtra("storeId").toString()
+        val barcodePattern: Pattern = Pattern.compile("""\b$storeId\d{9}\b""")
+        val dpciPattern: Pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{4}")
+        val brPattern: Pattern = Pattern.compile("\\d{2}[A-FM]\\s*\\d{3}\\D\\d{2}")
+        patterns = arrayOf<Pattern>(barcodePattern, dpciPattern, brPattern)
+
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -172,7 +176,7 @@ class ActivityCapture : AppCompatActivity() {
         patterns.forEach{
             val m: Matcher = it.matcher(blocks)
             while (m.find()) {
-                barcodes.add(m.group().replace("-", ""))
+                barcodes.add(m.group().replace("-", "").replace(" ", ""))
             }
         }
         return barcodes
@@ -182,10 +186,10 @@ class ActivityCapture : AppCompatActivity() {
         val folderMain = "barcodes"
         val mediaStorageDir = applicationInfo.dataDir
         // Create the storage directory if it does not exist
-        val f = File(mediaStorageDir + File.separator+ folderMain)
-        if (! f.exists()){
+        val f = File(mediaStorageDir + File.separator + folderMain)
+        if (!f.exists()) {
             f.mkdirs()
-            }
+        }
         return f.path + File.separator + fileName + ".PNG"
     }
 
@@ -215,11 +219,9 @@ class ActivityCapture : AppCompatActivity() {
     }
 
     fun clear(view: View) {
-        val intent = Intent(this, ActivityCapture::class.java)
         concurrentHashSet.clear()
         txtCount.text = "0"
         txtBarcodes.setText("")
-        startActivity(intent)
     }
 
 }

@@ -17,10 +17,13 @@
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
-        android:layout_width="181dp"
-        android:layout_height="432dp"
+        android:layout_width="230dp"
+        android:layout_height="413dp"
+        android:layout_marginEnd="8dp"
         android:nextFocusLeft="@id/viewFinder"
         android:nextFocusUp="@id/viewFinder"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/lblBarcodes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +52,7 @@
         android:singleLine="false"
         android:textAlignment="viewStart"
         android:textIsSelectable="true"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/btnGen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewFinder"
@@ -57,8 +61,11 @@
 
     <Button
         android:id="@+id/btnGen"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:onClick="gotoActivity"
         android:text="@string/generate"
         android:textSize="24sp"
@@ -68,9 +75,11 @@
 
     <Button
         android:id="@+id/btnGen2"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:onClick="clear"
         android:text="@string/clear"
         android:textSize="24sp"
@@ -82,13 +91,15 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGen2"
         app:layout_constraintEnd_toStartOf="@+id/txtBarcodes"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewFinder"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/poop" />
 
     <TextView
         android:id="@+id/txtCount"
