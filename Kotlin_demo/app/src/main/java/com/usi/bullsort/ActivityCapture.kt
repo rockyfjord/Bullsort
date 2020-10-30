@@ -190,6 +190,7 @@ class ActivityCapture : AppCompatActivity() {
         if (!f.exists()) {
             f.mkdirs()
         }
+        Log.d("SAVINGB", f.path + File.separator + fileName + ".PNG")
         return f.path + File.separator + fileName + ".PNG"
     }
 
