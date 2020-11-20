@@ -41,7 +41,11 @@ RecyclerView.Adapter<RecyclerAdapter.PhotoHolder>()  {
         }
 
         fun bindPhoto(bcodeData: Pair<String, String>) {
-            view.itemPosition.text = if ((layoutPosition + 1) % 50 == 0) "\uD83D\uDCA9" else (layoutPosition + 1).toString().padStart(3, '0')
+            view.itemPosition.text =
+                if ((layoutPosition + 1) % 50 == 0)
+                    "\uD83D\uDCA9"
+                else (layoutPosition + 1).toString().padStart(3, '0')
+
             val b = BitmapFactory.decodeFile(bcodeData.first)
             view.itemImage.setImageBitmap(Bitmap.createScaledBitmap(b, 950, 175, false));
             view.itemDescription.text = bcodeData.second

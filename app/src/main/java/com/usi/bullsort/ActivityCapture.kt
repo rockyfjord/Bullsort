@@ -45,7 +45,7 @@ class ActivityCapture : AppCompatActivity() {
         setContentView(R.layout.activity_capture)
         storeId = intent.getStringExtra("storeId").toString()
         val barcodePattern: Pattern = Pattern.compile("""\b$storeId\d{9}\b""")
-        val dpciPattern: Pattern = Pattern.compile("\\d{3}-\\d{2}-\\d{4}")
+        val dpciPattern: Pattern = Pattern.compile("\\d{3}[-\\s]\\d{2}[-\\s]\\d{4}")
         val brPattern: Pattern = Pattern.compile("\\d{2}[A-FM]\\s*\\d{3}\\D\\d{2}")
         patterns = arrayOf<Pattern>(barcodePattern, dpciPattern, brPattern)
 
@@ -123,17 +123,17 @@ class ActivityCapture : AppCompatActivity() {
 
                                 val text = processTextRecognitionResult(visionText)
                                 concurrentHashSet.addAll(text)
-                                thread { // launch a new coroutine in background and continue
+                                this@ActivityCapture.runOnUiThread(java.lang.Runnable {
                                     if (concurrentHashSet.size > 0) {
                                         val newText = concurrentHashSet.joinToString(
-                                            prefix = "",
-                                            postfix = "",
-                                            separator = "\n"
+                                                prefix = "",
+                                                postfix = "",
+                                                separator = "\n"
                                         )
                                         txtBarcodes.setText(newText)
                                         txtCount.text = concurrentHashSet.size.toString()
                                     }
-                                }
+                                })
 
                             }
                             .addOnFailureListener { e ->
