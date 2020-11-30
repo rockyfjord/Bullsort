@@ -4,47 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/colorPrimary"
     tools:context=".ActivityCapture">
 
     <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        tools:ignore="MissingConstraints" />
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
-        android:layout_width="230dp"
-        android:layout_height="413dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="252dp"
+        android:layout_height="384dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="257dp"
         android:nextFocusLeft="@id/viewFinder"
         android:nextFocusUp="@id/viewFinder"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/lblBarcodes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.camera.view.PreviewView>
 
     <TextView
         android:id="@+id/lblBarcodes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="489dp"
+        android:layout_marginEnd="304dp"
+        android:layout_marginBottom="218dp"
         android:labelFor="@id/txtBarcodes"
         android:text="@string/barcodes"
         android:textAlignment="viewStart"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/viewFinder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtBarcodes"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="387dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="103dp"
+        android:background="@android:color/transparent"
         android:enabled="false"
         android:gravity="top|start"
         android:inputType="none"
@@ -52,66 +59,72 @@
         android:singleLine="false"
         android:textAlignment="viewStart"
         android:textIsSelectable="true"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/btnGen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/viewFinder"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblBarcodes"
         tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/btnGen"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="203dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="649dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="8dp"
         android:onClick="gotoActivity"
         android:text="@string/generate"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnGen2"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="200dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="649dp"
+        android:layout_marginBottom="9dp"
         android:onClick="clear"
         android:text="@string/clear"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGen"
-        app:layout_constraintEnd_toStartOf="@+id/txtBarcodes"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGen2"
-        app:layout_constraintEnd_toStartOf="@+id/txtBarcodes"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewFinder"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/logo"
-        android:contentDescription="@string/poop" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnGen"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtCount"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="123dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="490dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="163dp"
         android:text="@string/txtCount"
         android:textAlignment="viewStart"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtBarcodes"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@+id/lblBarcodes"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="132dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="647dp"
+        android:contentDescription="@string/poop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
